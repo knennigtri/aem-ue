@@ -2,7 +2,8 @@
   "mappings": [
     "/content/aem-wknd-eds-ue/:/",
     "/content/aem-wknd-eds-ue/configuration:/.helix/config.json",
-    "/content/aem-wknd-eds-ue/metadata:/metadata.json"
+    "/content/aem-wknd-eds-ue/metadata:/metadata.json",
+    "/content/aem-wknd-eds-ue/redirects:/redirects.json"
   ],
   "includes": [
     "/content/aem-wknd-eds-ue/"
