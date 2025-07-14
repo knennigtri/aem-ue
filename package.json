@@ -12,7 +12,8 @@
     "build:json:models": "merge-json-cli -i \"models/_component-models.json\" -o \"component-models.json\"",
     "build:json:definitions": "merge-json-cli -i \"models/_component-definition.json\" -o \"component-definition.json\"",
     "build:json:filters": "merge-json-cli -i \"models/_component-filters.json\" -o \"component-filters.json\"",
-    "prepare": "husky"
+    "prepare": "husky",
+    "clear-cache": "node clearCache.js"
   },
   "repository": {
     "type": "git",
@@ -24,7 +25,12 @@
     "url": "https://github.com/adobe/aem-boilerplate/issues"
   },
   "homepage": "https://github.com/adobe/aem-boilerplate#readme",
+  "dependencies": {
+    "axios": "^1.10.0",
+    "dotenv": "^17.2.0"
+  },
   "devDependencies": {
+    "@adobe/aem-cli": "^16.10.35",
     "@babel/eslint-parser": "7.27.1",
     "eslint": "8.57.1",
     "eslint-config-airbnb-base": "15.0.0",
@@ -36,8 +42,5 @@
     "npm-run-all": "4.1.5",
     "stylelint": "16.19.1",
     "stylelint-config-standard": "38.0.0"
-  },
-  "dependencies": {
-    "@adobe/aem-cli": "^16.10.35"
   }
 }
