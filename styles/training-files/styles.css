@@ -22,8 +22,8 @@
   --link-hover-color: black;
 
   /* fonts */
-  --body-font-family: 'Source Sans Pro', source-sans-pro-normal-400-fallback, sans-serif;
-  --heading-font-family: 'Asar', asar-normal-400-fallback, sans-serif;
+  --body-font-family: 'Source Sans Pro', sans-serif;
+  --heading-font-family: 'Asar', sans-serif;
 
   /* body sizes */
   --body-font-size-m: 22px;
@@ -43,21 +43,6 @@
 }
 
 /* Add fallback fonts here */
-
-/* fallback font for Asar (normal - 400) */
-@font-face {
-  font-family: "asar-normal-400-fallback";
-  size-adjust: 95.729%;
-  src: local("Arial");
-}
-
-/* fallback font for Source Sans Pro (normal - 400) */
-@font-face {
-  font-family: "source-sans-pro-normal-400-fallback";
-  size-adjust: 92.889%;
-  src: local("Arial");
-}
-
 
 @media (width >= 900px) {
   :root {
