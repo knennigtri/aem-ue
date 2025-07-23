@@ -46,7 +46,10 @@
                     "component": "aem-content",
                     "name": "textContent_cta",
                     "label": "CTA",
-                    "valueType": "string"
+                    "valueType": "string",
+                    "validation": {
+                      "rootPath": "/content/aem-wknd-eds-ue"
+                    }
                 },
                 {
                     "component": "text",
