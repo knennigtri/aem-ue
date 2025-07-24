@@ -9,7 +9,7 @@ it.
 
 // Configuration for Edge Delivery Services
 const AEM_CONFIG = {
-  host: "https://publish-p156903-e1664873.adobeaemcloud.com",
+  host: 'https://publish-p156903-e1726641.adobeaemcloud.com',
   endpoint: '/graphql/execute.json',
   disableCache: false, // Set to true for development
 };
@@ -88,7 +88,7 @@ export async function fetchPersistedQuery(persistedQueryName, queryParams) {
  */
 export async function getAdventureByPath(path) {
   const queryParameters = {
-    path,
+    adventurePath: path,
     imageFormat: 'JPG',
     imageSeoName: '',
     imageWidth: 1200,
