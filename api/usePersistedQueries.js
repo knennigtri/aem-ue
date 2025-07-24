@@ -88,7 +88,7 @@ export async function fetchPersistedQuery(persistedQueryName, queryParams) {
 export async function getAdventureByPath(path) {
   // Strip .html extension if present (Universal Editor adds this)
   const cleanPath = path.replace(/\.html$/, '');
-  
+
   const queryParameters = {
     adventurePath: cleanPath,
     imageFormat: 'JPG',
