@@ -5,6 +5,7 @@
  */
 
 import { createOptimizedPicture } from '../../scripts/aem.js';
+import { getAdventureByPath } from '../../api/usePersistedQueries.js';
 
 /**
  * Extract content fragment path from the block configuration
@@ -32,69 +33,11 @@ function getContentFragmentPath(block) {
 }
 
 /**
- * Fallback: Fetch content fragment using GraphQL API
+ * Fetch content fragment using the AEM Headless Client and persisted queries
  */
 async function fetchContentFragmentViaGraphQL(cfPath) {
   try {
-    const query = `
-      query GetAdventureByPath($path: String!) {
-        adventureByPath(_path: $path) {
-          item {
-            _path
-            title
-            slug
-            description {
-              plaintext
-              html
-            }
-            primaryImage {
-              _path
-              mimeType
-              width
-              height
-              url
-            }
-            activity
-            adventureType
-            tripLength
-            groupSize
-            difficulty
-            price
-            gearList {
-              plaintext
-              html
-            }
-            itinerary {
-              plaintext
-              html
-            }
-          }
-        }
-      }
-    `;
-
-    const response = await fetch('/graphql/execute.json/wknd-shared/adventure-by-path', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        query,
-        variables: { path: cfPath },
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`GraphQL HTTP error! status: ${response.status}`);
-    }
-
-    const result = await response.json();
-
-    if (result.errors) {
-      throw new Error(`GraphQL error: ${result.errors.map((e) => e.message).join(', ')}`);
-    }
-
-    return result.data?.adventureByPath?.item;
+    return await getAdventureByPath(cfPath);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Failed to fetch content fragment via GraphQL:', error);
@@ -351,6 +294,7 @@ function showEmpty(block) {
  * Main decoration function
  */
 export default async function decorate(block) {
+  console.log('decorate');
   // Add Universal Editor instrumentation to the block itself
   block.setAttribute('data-aue-resource', 'urn:aem:/content/dam/wknd-shared');
   block.setAttribute('data-aue-type', 'component');
@@ -358,6 +302,7 @@ export default async function decorate(block) {
 
   // Get the content fragment path
   const cfPath = getContentFragmentPath(block);
+  console.log('cfPath', cfPath);
 
   if (!cfPath) {
     showEmpty(block);
