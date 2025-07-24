@@ -310,7 +310,7 @@ export default async function decorate(block) {
   }
 
   // Add Universal Editor instrumentation to the block itself
-  block.setAttribute('data-aue-resource', `urn:aemconnection:/content/dam/wknd-shared${cfPath}jcr:content/data/master`);
+  block.setAttribute('data-aue-resource', `urn:aemconnection:/content/dam/wknd-shared${cfPath}/jcr:content/data/master`);
   block.setAttribute('data-aue-type', 'resource');
   block.setAttribute('data-aue-filter', 'cf');
 
