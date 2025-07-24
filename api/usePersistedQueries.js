@@ -43,17 +43,16 @@ export async function fetchPersistedQuery(persistedQueryName, queryParams) {
 
   try {
     // Build the URL for the persisted query
-    const url = `${AEM_CONFIG.host}${AEM_CONFIG.endpoint}/${persistedQueryName}`;
+    let url = `${AEM_CONFIG.host}${AEM_CONFIG.endpoint}/${persistedQueryName}`;
 
-    // Add query parameters to URL if provided
-    const urlWithParams = new URL(url);
+    // Add query variables to URL if provided
     if (queryParameters) {
       Object.entries(queryParameters).forEach(([key, value]) => {
-        urlWithParams.searchParams.append(key, value);
+        url += `;${key}=${value}`;
       });
     }
 
-    const response = await fetch(urlWithParams.toString());
+    const response = await fetch(url);
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);

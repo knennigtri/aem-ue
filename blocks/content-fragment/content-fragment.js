@@ -3,8 +3,6 @@
  * Displays a single content fragment selected via Universal Editor picker
  * Similar functionality to AdventureDetail.jsx but as a UE block
  */
-
-import { createOptimizedPicture } from '../../scripts/aem.js';
 import { getAdventureByPath } from '../../api/usePersistedQueries.js';
 
 /**
@@ -117,12 +115,23 @@ function createContentFragmentDisplay(contentFragment) {
     const imageContainer = document.createElement('div');
     imageContainer.className = 'content-fragment-image';
 
-    const picture = createOptimizedPicture(
-      contentFragment.primaryImage.url,
-      contentFragment.title,
-      false,
-      [{ width: '1200' }],
-    );
+    const picture = document.createElement('picture');
+
+    // Create WebP source
+    const source = document.createElement('source');
+    // eslint-disable-next-line no-underscore-dangle
+    source.srcset = `https://publish-p156903-e1726641.adobeaemcloud.com${contentFragment.primaryImage._path}?width=1200&format=webply&optimize=medium`;
+    source.type = 'image/webp';
+
+    // Create fallback img
+    const img = document.createElement('img');
+    // eslint-disable-next-line no-underscore-dangle
+    img.src = `https://publish-p156903-e1726641.adobeaemcloud.com${contentFragment.primaryImage._path}?width=1200&format=webply&optimize=medium`;
+    img.alt = contentFragment.title;
+    img.loading = 'lazy';
+
+    picture.appendChild(source);
+    picture.appendChild(img);
     imageContainer.appendChild(picture);
     heroSection.appendChild(imageContainer);
   }
@@ -294,7 +303,6 @@ function showEmpty(block) {
  * Main decoration function
  */
 export default async function decorate(block) {
-  console.log('decorate');
   // Add Universal Editor instrumentation to the block itself
   block.setAttribute('data-aue-resource', 'urn:aem:/content/dam/wknd-shared');
   block.setAttribute('data-aue-type', 'component');
@@ -302,7 +310,6 @@ export default async function decorate(block) {
 
   // Get the content fragment path
   const cfPath = getContentFragmentPath(block);
-  console.log('cfPath', cfPath);
 
   if (!cfPath) {
     showEmpty(block);
