@@ -73,7 +73,7 @@ function createContentFragmentDisplay(contentFragment) {
   container.setAttribute('data-aue-resource', `urn:aemconnection:${contentFragment._path}/jcr:content/data/master`);
   // container.setAttribute('data-aue-type', 'resource');
   container.setAttribute('data-aue-label', `${contentFragment.title}`);
-  container.setAttribute('data-aue-filter', 'cf');
+  // container.setAttribute('data-aue-filter', 'cf');
 
   // Hero section with image and title
   const heroSection = document.createElement('div');
@@ -90,7 +90,6 @@ function createContentFragmentDisplay(contentFragment) {
     // eslint-disable-next-line no-underscore-dangle
     source.srcset = `${AEM_CONFIG.host}${contentFragment.primaryImage._path}?width=1200&format=webply&optimize=medium`;
     source.type = 'image/webp';
-    source = setUEAttributes(source, 'media', 'primaryImage'); // Sets UE attributes
 
     // Create fallback img
     const img = document.createElement('img');
@@ -98,6 +97,7 @@ function createContentFragmentDisplay(contentFragment) {
     img.src = `${AEM_CONFIG.host}${contentFragment.primaryImage._path}?width=1200&format=webply&optimize=medium`;
     img.alt = contentFragment.title;
     img.loading = 'lazy';
+    img = setUEAttributes(img, 'media', 'primaryImage'); // Sets UE attributes
 
     picture.appendChild(source);
     picture.appendChild(img);
