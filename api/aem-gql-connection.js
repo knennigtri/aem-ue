@@ -1,9 +1,9 @@
 function getAEMPublish() {
-  return 'https://publish-p156903-e1726641.adobeaemcloud.com/';
+  return 'https://publish-p156903-e1726641.adobeaemcloud.com';
 }
 
 function getAEMAuthor() {
-  return 'https://author-p156903-e1726641.adobeaemcloud.com/';
+  return 'https://author-p156903-e1726641.adobeaemcloud.com';
 }
 
 // Dynamic switching for Universal Editor (author) and .aem.page/aem.live (publish)
