@@ -71,7 +71,7 @@ function createContentFragmentDisplay(contentFragment) {
   container.className = 'content-fragment-detail';
   // eslint-disable-next-line no-underscore-dangle
   container.setAttribute('data-aue-resource', `urn:aemconnection:${contentFragment._path}/jcr:content/data/master`);
-  // container.setAttribute('data-aue-type', 'resource');
+  container.setAttribute('data-aue-type', 'aem-content-fragment');
   container.setAttribute('data-aue-label', `${contentFragment.title}`);
   // container.setAttribute('data-aue-filter', 'cf');
 
@@ -86,13 +86,13 @@ function createContentFragmentDisplay(contentFragment) {
     const picture = document.createElement('picture');
 
     // Create WebP source
-    let source = document.createElement('source');
+    const source = document.createElement('source');
     // eslint-disable-next-line no-underscore-dangle
     source.srcset = `${AEM_CONFIG.host}${contentFragment.primaryImage._path}?width=1200&format=webply&optimize=medium`;
     source.type = 'image/webp';
 
     // Create fallback img
-    const img = document.createElement('img');
+    let img = document.createElement('img');
     // eslint-disable-next-line no-underscore-dangle
     img.src = `${AEM_CONFIG.host}${contentFragment.primaryImage._path}?width=1200&format=webply&optimize=medium`;
     img.alt = contentFragment.title;
