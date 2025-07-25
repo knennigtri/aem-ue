@@ -34,6 +34,7 @@ async function fetchPersistedQuery(persistedQueryName, queryParameters) {
 
   try {
     const host = getAEMHost();
+    // eslint-disable-next-line no-console
     console.debug(`Running GraphQL queries from: ${host}`);
     // Build the URL for the persisted query
     let url = `${host}/graphql/execute.json/${persistedQueryName}`;

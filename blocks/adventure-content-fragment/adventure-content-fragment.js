@@ -87,19 +87,17 @@ function createDisplay(contentfragment) {
  * Main decoration function
  */
 export default async function decorate(block) {
-  // Get the content fragment path
+  // Get the content fragment path from the generated DOM (Universal Editor)
   let cfPath = block.querySelector('a')?.getAttribute('href');
-  if (cfPath) {
-    cfPath = cfPath.replace(/\.html$/, ''); // Strip .html extension if present (Universal Editor adds this)
-  }
-
   if (!cfPath) {
     showEmpty(block);
     return;
   }
+  cfPath = cfPath.replace(/\.html$/, ''); // Strip .html extension if present (Universal Editor adds this)
 
   try {
-    // Fetch the content fragment
+    // Fetch the content fragment via persisted query
+    // from aem-gql-connection.js (contains author/publish endpoints)
     const contentFragment = await getAdventureByPath(cfPath);
 
     if (!contentFragment) {
@@ -107,6 +105,14 @@ export default async function decorate(block) {
       return;
     }
 
+    /*
+    Because the content fragment is a reference property,
+      we can rewrite the entire block with the content fragment data
+    Caution with doing this with default content and inferred elements
+      since UE it renders the block with special aue attributes
+    Learn more about inferred elements here:
+      https://www.aem.live/developer/component-model-definitions#creating-semantic-content-models-for-blocks
+    */
     block.innerHTML = createDisplay(contentFragment);
   } catch (error) {
     // eslint-disable-next-line no-console
