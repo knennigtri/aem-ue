@@ -197,7 +197,7 @@
         "valueType": "string",
         "variationName": "contentFragmentVariation",
         "validation": {
-          "rootPath": "/content/dam/wknd-shared/enadventures"
+          "rootPath": "/content/dam/wknd-shared/en/adventures"
         }
       }
     ]
