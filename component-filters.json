@@ -21,12 +21,6 @@
     ]
   },
   {
-    "id": "adventure-content-fragment",
-    "components": [
-      "cf"
-    ]
-  },
-  {
     "id": "cards",
     "components": [
       "card"
