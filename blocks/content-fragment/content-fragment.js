@@ -6,32 +6,6 @@
 import { getAdventureByPath, AEM_CONFIG } from '../../api/usePersistedQueries.js';
 
 /**
- * Extract content fragment path from the block configuration
- */
-function getContentFragmentPath(block) {
-  // Check if there's a content fragment reference in the block data
-  let cfReference = block.querySelector('a')?.getAttribute('href');
-  if (cfReference) {
-    cfReference = cfReference.replace(/\.html$/, ''); // Strip .html extension if present (Universal Editor adds this)
-    return cfReference;
-  }
-  return null;
-}
-
-/**
- * Fetch content fragment using the AEM Headless Client and persisted queries
- */
-async function fetchContentFragmentViaGraphQL(cfPath) {
-  try {
-    return await getAdventureByPath(cfPath);
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('Failed to fetch content fragment via GraphQL:', error);
-    return null;
-  }
-}
-
-/**
  * Sets UE attributes on an element
  * Allows for In-context editing of Content Fragments
  */
@@ -244,13 +218,6 @@ function createContentFragmentDisplay(contentFragment) {
 }
 
 /**
- * Show loading state
- */
-function showLoading(block) {
-  block.innerHTML = '<div class="content-fragment-loading">Loading content fragment...</div>';
-}
-
-/**
  * Show error state
  */
 function showError(block, message) {
@@ -269,12 +236,9 @@ function showEmpty(block) {
  * Render the content fragment display
  */
 async function renderContentFragment(block, cfPath) {
-  // Show loading state
-  showLoading(block);
-
   try {
     // Fetch the content fragment
-    const contentFragment = await fetchContentFragmentViaGraphQL(cfPath);
+    const contentFragment = await getAdventureByPath(cfPath);
 
     if (!contentFragment) {
       showError(block, 'Content fragment not found');
@@ -300,7 +264,10 @@ async function renderContentFragment(block, cfPath) {
  */
 export default async function decorate(block) {
   // Get the content fragment path
-  const cfPath = getContentFragmentPath(block);
+  let cfPath = block.querySelector('a')?.getAttribute('href');
+  if (cfPath) {
+    cfPath = cfPath.replace(/\.html$/, ''); // Strip .html extension if present (Universal Editor adds this)
+  }
 
   if (!cfPath) {
     showEmpty(block);
