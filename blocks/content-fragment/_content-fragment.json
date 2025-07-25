@@ -7,6 +7,11 @@
                 "xwalk": {
                     "page": {
                         "resourceType": "core/franklin/components/block/v1/block",
+                        "name":"Sample CF",
+                        "cfModel": "EDS Xwalk Model",
+                        "cfFolder": "content-fragment",
+                        "title": "Sample",
+                        "description": "sample decription",
                         "template": {
                             "name": "Content Fragment",
                             "model": "content-fragment"
@@ -27,7 +32,7 @@
                     "valueType": "string",
                     "variationName": "contentFragmentVariation",
                     "validation": {
-                        "rootPath": "/content/dam/wknd-shared"
+                        "rootPath": "/content/dam/wknd-shared/enadventures"
                     }
                 }
             ]

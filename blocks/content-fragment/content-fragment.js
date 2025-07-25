@@ -316,9 +316,10 @@ export default async function decorate(block) {
   }
 
   // Add Universal Editor instrumentation to the block itself
-  // block.setAttribute('data-aue-resource', `urn:aemconnection:${cfPath}/jcr:content/data/master`);
-  // block.setAttribute('data-aue-type', 'resource');
-  // block.setAttribute('data-aue-filter', 'cf');
+  block.setAttribute('data-aue-resource', `urn:aemconnection:${cfPath}/jcr:content/data/master`);
+  block.setAttribute('data-aue-type', 'resource');
+  block.setAttribute('data-aue-filter', 'cf');
+  block.setAttribute('data-aue-label', `${cfPath}`);
 
   // Initial render
   await renderContentFragment(block, cfPath);
