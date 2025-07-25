@@ -278,15 +278,15 @@ export default async function decorate(block) {
   await renderContentFragment(block, cfPath);
 
   // Listen for Universal Editor content changes and re-render
-  const handleContentChange = () => {
-    // Add a small delay to ensure the content fragment is saved before re-fetching
-    setTimeout(() => {
-      renderContentFragment(block, cfPath);
-    }, 500);
-  };
+  // const handleContentChange = () => {
+  //   // Add a small delay to ensure the content fragment is saved before re-fetching
+  //   setTimeout(() => {
+  //     renderContentFragment(block, cfPath);
+  //   }, 500);
+  // };
 
-  // Listen for various Universal Editor events
-  document.addEventListener('aue:content-patch', handleContentChange);
-  document.addEventListener('aue:content-update', handleContentChange);
-  document.addEventListener('aue:ui-publish', handleContentChange);
+  // // Listen for various Universal Editor events
+  // document.addEventListener('aue:content-patch', handleContentChange);
+  // document.addEventListener('aue:content-update', handleContentChange);
+  // document.addEventListener('aue:ui-publish', handleContentChange);
 }
