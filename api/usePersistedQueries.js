@@ -42,7 +42,6 @@ export async function fetchPersistedQuery(persistedQueryName, queryParameters) {
         url += `;${key}=${value}`;
       });
     }
-    console.error('Fetched URL', url);
 
     const response = await fetch(url);
 

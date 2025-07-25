@@ -285,7 +285,6 @@ async function renderContentFragment(block, cfPath) {
   try {
     // Fetch the content fragment
     const contentFragment = await fetchContentFragmentViaGraphQL(cfPath);
-    console.error('contentFragment', contentFragment);
 
     if (!contentFragment) {
       showError(block, 'Content fragment not found');
@@ -319,7 +318,7 @@ export default async function decorate(block) {
   block.setAttribute('data-aue-resource', `urn:aemconnection:${cfPath}/jcr:content/data/master`);
   block.setAttribute('data-aue-type', 'resource');
   block.setAttribute('data-aue-filter', 'cf');
-  block.setAttribute('data-aue-label', `${cfPath}`);
+  // block.setAttribute('data-aue-label', `${cfPath}`); //Sets Properties title in UE
 
   // Initial render
   await renderContentFragment(block, cfPath);
