@@ -150,6 +150,20 @@
     ]
   },
   {
+    "id": "adventure-content-fragment",
+    "fields": [
+      {
+        "component": "aem-content-fragment",
+        "name": "path",
+        "value": "",
+        "label": "Content Fragment path",
+        "validation": {
+          "rootPath": "/content/dam/wknd-shared/en/adventures"
+        }
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {
@@ -184,20 +198,6 @@
         "name": "rows",
         "value": "",
         "label": "Rows"
-      }
-    ]
-  },
-  {
-    "id": "content-fragment-adventure",
-    "fields": [
-      {
-        "component": "aem-content-fragment",
-        "name": "path",
-        "value": "",
-        "label": "Content Fragment path",
-        "validation": {
-          "rootPath": "/content/dam/wknd-shared/en/adventures"
-        }
       }
     ]
   },
