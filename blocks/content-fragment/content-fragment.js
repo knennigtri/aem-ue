@@ -49,8 +49,7 @@ async function fetchContentFragmentViaGraphQL(cfPath) {
 /**
  * Create a detail item for the details grid
  */
-// function createDetailItem(label, value, property) {
-function createDetailItem(label, value) {
+function createDetailItem(label, value, property) {
   const item = document.createElement('div');
   item.className = 'content-fragment-detail-item';
 
@@ -61,8 +60,8 @@ function createDetailItem(label, value) {
   const valueEl = document.createElement('span');
   valueEl.className = 'detail-value';
   valueEl.textContent = value;
-  // valueEl.setAttribute('data-aue-type', 'text'); // CFM type
-  // valueEl.setAttribute('data-aue-prop', property); // CFM name
+  valueEl.setAttribute('data-aue-type', 'text'); // Content Fragment model type
+  valueEl.setAttribute('data-aue-prop', property); // Content Fragment model name
 
   item.appendChild(labelEl);
   item.appendChild(valueEl);
@@ -92,8 +91,8 @@ function createContentFragmentDisplay(contentFragment) {
     // eslint-disable-next-line no-underscore-dangle
     source.srcset = `https://publish-p156903-e1726641.adobeaemcloud.com${contentFragment.primaryImage._path}?width=1200&format=webply&optimize=medium`;
     source.type = 'image/webp';
-    // source.setAttribute('data-aue-type', 'media'); // CFM type
-    // source.setAttribute('data-aue-prop', 'primaryImage'); // CFM name
+    source.setAttribute('data-aue-type', 'media'); // Content Fragment model type
+    source.setAttribute('data-aue-prop', 'primaryImage'); // Content Fragment model name
 
     // Create fallback img
     const img = document.createElement('img');
@@ -101,8 +100,8 @@ function createContentFragmentDisplay(contentFragment) {
     img.src = `https://publish-p156903-e1726641.adobeaemcloud.com${contentFragment.primaryImage._path}?width=1200&format=webply&optimize=medium`;
     img.alt = contentFragment.title;
     img.loading = 'lazy';
-    // img.setAttribute('data-aue-type', 'media'); // CFM type
-    // img.setAttribute('data-aue-prop', 'primaryImage'); // CFM name
+    img.setAttribute('data-aue-type', 'media'); // Content Fragment model type
+    img.setAttribute('data-aue-prop', 'primaryImage'); // Content Fragment model name
 
     picture.appendChild(source);
     picture.appendChild(img);
@@ -117,8 +116,8 @@ function createContentFragmentDisplay(contentFragment) {
   const title = document.createElement('h1');
   title.className = 'content-fragment-title';
   title.textContent = contentFragment.title;
-  // title.setAttribute('data-aue-type', 'text'); // CFM type
-  // title.setAttribute('data-aue-prop', 'title'); // CFM name
+  title.setAttribute('data-aue-type', 'text'); // Content Fragment model type
+  title.setAttribute('data-aue-prop', 'title'); // Content Fragment model name
 
   titleOverlay.appendChild(title);
   heroSection.appendChild(titleOverlay);
@@ -198,8 +197,8 @@ function createContentFragmentDisplay(contentFragment) {
     const descriptionHtml = contentFragment.description.html
       || contentFragment.description.plaintext;
     descriptionContent.innerHTML = descriptionHtml;
-    // descriptionContent.setAttribute('data-aue-type', 'richtext'); //CFM type
-    // descriptionContent.setAttribute('data-aue-prop', 'description'); // CFM name
+    descriptionContent.setAttribute('data-aue-type', 'richtext'); // Content Fragment model type
+    descriptionContent.setAttribute('data-aue-prop', 'description'); // Content Fragment model name
 
     descriptionSection.appendChild(descriptionContent);
     contentSection.appendChild(descriptionSection);
@@ -219,8 +218,8 @@ function createContentFragmentDisplay(contentFragment) {
     const itineraryHtml = contentFragment.itinerary.html
       || contentFragment.itinerary.plaintext;
     itineraryContent.innerHTML = itineraryHtml;
-    // itineraryContent.setAttribute('data-aue-type', 'richtext'); // CFM type
-    // itineraryContent.setAttribute('data-aue-prop', 'itinerary'); // CFM name
+    itineraryContent.setAttribute('data-aue-type', 'richtext'); // Content Fragment model type
+    itineraryContent.setAttribute('data-aue-prop', 'itinerary'); // Content Fragment model name
 
     itinerarySection.appendChild(itineraryContent);
     contentSection.appendChild(itinerarySection);
@@ -240,8 +239,8 @@ function createContentFragmentDisplay(contentFragment) {
     const gearHtml = contentFragment.gearList.html
       || contentFragment.gearList.plaintext;
     gearContent.innerHTML = gearHtml;
-    // gearContent.setAttribute('data-aue-type', 'richtext'); // CFM type
-    // gearContent.setAttribute('data-aue-prop', 'gearList'); // CFM name
+    gearContent.setAttribute('data-aue-type', 'richtext'); // Content Fragment model type
+    gearContent.setAttribute('data-aue-prop', 'gearList'); // Content Fragment model name
 
     gearSection.appendChild(gearContent);
     contentSection.appendChild(gearSection);
