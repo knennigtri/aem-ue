@@ -9,10 +9,18 @@ it.
 
 // Configuration for Edge Delivery Services
 export const AEM_CONFIG = {
+  publish: 'https://publish-p156903-e1726641.adobeaemcloud.com',
+  author: 'https://author-p156903-e1726641.adobeaemcloud.com',
   host: 'https://publish-p156903-e1726641.adobeaemcloud.com',
   endpoint: '/graphql/execute.json',
   disableCache: true, // Set to true for development, false for production
 };
+
+if (window.location.hostname.endsWith('adobeaemcloud.com')) {
+  console.error('Changed to author as host');
+  AEM_CONFIG.host = 'https://author-p156903-e1726641.adobeaemcloud.com';
+}
+console.error('AEM_CONFIG', AEM_CONFIG);
 
 const wkndContext = {
   endpoint: 'wknd-shared',
