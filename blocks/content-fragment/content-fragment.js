@@ -331,11 +331,4 @@ export default async function decorate(block) {
   document.addEventListener('aue:content-patch', handleContentChange);
   document.addEventListener('aue:content-update', handleContentChange);
   document.addEventListener('aue:ui-publish', handleContentChange);
-
-  // Store cleanup function on the block for potential future use
-  block._ueCleanup = () => {
-    document.removeEventListener('aue:content-patch', handleContentChange);
-    document.removeEventListener('aue:content-update', handleContentChange);
-    document.removeEventListener('aue:ui-publish', handleContentChange);
-  };
 }
