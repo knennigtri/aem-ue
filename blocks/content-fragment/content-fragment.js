@@ -71,7 +71,7 @@ function createContentFragmentDisplay(contentFragment) {
   container.className = 'content-fragment-detail';
   // eslint-disable-next-line no-underscore-dangle
   container.setAttribute('data-aue-resource', `urn:aemconnection:${contentFragment._path}/jcr:content/data/master`);
-  container.setAttribute('data-aue-type', 'resource');
+  // container.setAttribute('data-aue-type', 'resource');
   container.setAttribute('data-aue-label', `${contentFragment.title}`);
   container.setAttribute('data-aue-filter', 'cf');
 
@@ -93,12 +93,11 @@ function createContentFragmentDisplay(contentFragment) {
     source = setUEAttributes(source, 'media', 'primaryImage'); // Sets UE attributes
 
     // Create fallback img
-    let img = document.createElement('img');
+    const img = document.createElement('img');
     // eslint-disable-next-line no-underscore-dangle
     img.src = `${AEM_CONFIG.host}${contentFragment.primaryImage._path}?width=1200&format=webply&optimize=medium`;
     img.alt = contentFragment.title;
     img.loading = 'lazy';
-    img = setUEAttributes(img, 'media', 'primaryImage'); // Sets UE attributes
 
     picture.appendChild(source);
     picture.appendChild(img);
