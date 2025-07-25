@@ -15,21 +15,6 @@ function getContentFragmentPath(block) {
     cfReference = cfReference.replace(/\.html$/, ''); // Strip .html extension if present (Universal Editor adds this)
     return cfReference;
   }
-
-  // Check for data attributes
-  let cfPath = block.dataset.picker || block.dataset.contentFragment;
-  cfPath = cfPath.replace(/\.html$/, ''); // Strip .html extension if present (Universal Editor adds this)
-
-  if (cfPath) {
-    return cfPath;
-  }
-
-  // Check for text content that might be a path
-  const textContent = block.textContent.trim();
-  if (textContent && textContent.startsWith('/content/dam/')) {
-    return textContent;
-  }
-
   return null;
 }
 
@@ -87,7 +72,7 @@ function createContentFragmentDisplay(contentFragment) {
   // eslint-disable-next-line no-underscore-dangle
   container.setAttribute('data-aue-resource', `urn:aemconnection:${contentFragment._path}/jcr:content/data/master`);
   container.setAttribute('data-aue-type', 'resource');
-  container.setAttribute('data-aue-label', 'Adventures Content Fragment');
+  container.setAttribute('data-aue-label', `${contentFragment.title}`);
   container.setAttribute('data-aue-filter', 'cf');
 
   // Hero section with image and title

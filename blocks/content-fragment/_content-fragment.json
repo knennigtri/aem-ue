@@ -9,7 +9,8 @@
                         "resourceType": "core/franklin/components/block/v1/block",
                         "template": {
                             "name": "Content Fragment",
-                            "model": "content-fragment-adventure"
+                            "model": "content-fragment-adventure",
+                            "filter": "cf"
                         }
                     }
                 }
