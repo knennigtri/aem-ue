@@ -7,218 +7,6 @@ import { getAdventureByPath } from '../../api/WKND_persistedQueries.js';
 import { getAEMHost } from '../../api/aem-gql-connection.js';
 
 /**
- * Sets UE attributes on an element
- * Allows for In-context editing of Content Fragments
- */
-function setUEAttributes(element, type, property) {
-  element.setAttribute('data-aue-type', type); // CFM type
-  element.setAttribute('data-aue-prop', property); // CFM name
-  return element;
-}
-
-/**
- * Create a detail item for the details grid
- */
-function createDetailItem(label, value, property) {
-  const item = document.createElement('div');
-  item.className = 'content-fragment-detail-item';
-
-  const labelEl = document.createElement('span');
-  labelEl.className = 'detail-label';
-  labelEl.textContent = label;
-
-  let valueEl = document.createElement('span');
-  valueEl.className = 'detail-value';
-  valueEl.textContent = value;
-  valueEl = setUEAttributes(valueEl, 'text', property);
-
-  item.appendChild(labelEl);
-  item.appendChild(valueEl);
-
-  return item;
-}
-
-/**
- * Create the main content fragment display
- */
-function createContentFragmentDisplay(contentFragment) {
-  const container = document.createElement('div');
-  container.className = 'content-fragment-detail';
-
-  // Required attributes for CF Editor icon and Content Fragment fields to show up in Properties
-  // eslint-disable-next-line no-underscore-dangle
-  container.setAttribute('data-aue-resource', `urn:aemconnection:${contentFragment._path}/jcr:content/data/master`);
-  container.setAttribute('data-aue-type', 'reference');
-  container.setAttribute('data-aue-label', `${contentFragment.title}`); // Optional. Sets Content Tree fragment label
-
-  // Hero section with image and title
-  const heroSection = document.createElement('div');
-  heroSection.className = 'content-fragment-hero';
-
-  if (contentFragment.primaryImage) {
-    const imageContainer = document.createElement('div');
-    imageContainer.className = 'content-fragment-image';
-
-    const picture = document.createElement('picture');
-
-    // Create WebP source
-    const source = document.createElement('source');
-    // eslint-disable-next-line no-underscore-dangle
-    source.srcset = `${getAEMHost()}${contentFragment.primaryImage._path}?width=1200&format=webply&optimize=medium`;
-    source.type = 'image/webp';
-
-    // Create fallback img
-    let img = document.createElement('img');
-    // eslint-disable-next-line no-underscore-dangle
-    img.src = `${getAEMHost()}${contentFragment.primaryImage._path}?width=1200&format=webply&optimize=medium`;
-    img.alt = contentFragment.title;
-    img.loading = 'lazy';
-    img = setUEAttributes(img, 'media', 'primaryImage'); // Sets UE attributes
-
-    picture.appendChild(source);
-    picture.appendChild(img);
-    imageContainer.appendChild(picture);
-    heroSection.appendChild(imageContainer);
-  }
-
-  // Title overlay
-  const titleOverlay = document.createElement('div');
-  titleOverlay.className = 'content-fragment-title-overlay';
-
-  let title = document.createElement('h1');
-  title.className = 'content-fragment-title';
-  title.textContent = contentFragment.title;
-  title = setUEAttributes(title, 'text', 'title'); // Sets UE attributes
-
-  titleOverlay.appendChild(title);
-  heroSection.appendChild(titleOverlay);
-  container.appendChild(heroSection);
-
-  // Content section
-  const contentSection = document.createElement('div');
-  contentSection.className = 'content-fragment-content';
-
-  // Adventure details grid
-  const detailsGrid = document.createElement('div');
-  detailsGrid.className = 'content-fragment-details-grid';
-
-  // Activity
-  if (contentFragment.activity) {
-    const activityItem = createDetailItem(
-      'Activity',
-      contentFragment.activity,
-      'activity',
-    );
-    detailsGrid.appendChild(activityItem);
-  }
-
-  // Difficulty
-  if (contentFragment.difficulty) {
-    const difficultyItem = createDetailItem(
-      'Difficulty',
-      contentFragment.difficulty,
-      'difficulty',
-    );
-    detailsGrid.appendChild(difficultyItem);
-  }
-
-  // Trip Length
-  if (contentFragment.tripLength) {
-    const tripLengthItem = createDetailItem(
-      'Duration',
-      contentFragment.tripLength,
-      'tripLength',
-    );
-    detailsGrid.appendChild(tripLengthItem);
-  }
-
-  // Group Size
-  if (contentFragment.groupSize) {
-    const groupSizeItem = createDetailItem(
-      'Group Size',
-      contentFragment.groupSize,
-      'groupSize',
-    );
-    detailsGrid.appendChild(groupSizeItem);
-  }
-
-  // Price
-  if (contentFragment.price) {
-    const priceItem = createDetailItem(
-      'Price',
-      `$${contentFragment.price}`,
-      'price',
-    );
-    detailsGrid.appendChild(priceItem);
-  }
-
-  contentSection.appendChild(detailsGrid);
-
-  // Description
-  if (contentFragment.description) {
-    const descriptionSection = document.createElement('div');
-    descriptionSection.className = 'content-fragment-description';
-
-    const descriptionTitle = document.createElement('h2');
-    descriptionTitle.textContent = 'About This Adventure';
-    descriptionSection.appendChild(descriptionTitle);
-
-    let descriptionContent = document.createElement('div');
-    descriptionContent.className = 'content-fragment-description-content';
-    const descriptionHtml = contentFragment.description.html
-      || contentFragment.description.plaintext;
-    descriptionContent.innerHTML = descriptionHtml;
-    descriptionContent = setUEAttributes(descriptionContent, 'richtext', 'description'); // Sets UE attributes
-
-    descriptionSection.appendChild(descriptionContent);
-    contentSection.appendChild(descriptionSection);
-  }
-
-  // Itinerary
-  if (contentFragment.itinerary) {
-    const itinerarySection = document.createElement('div');
-    itinerarySection.className = 'content-fragment-itinerary';
-
-    const itineraryTitle = document.createElement('h2');
-    itineraryTitle.textContent = 'Itinerary';
-    itinerarySection.appendChild(itineraryTitle);
-
-    let itineraryContent = document.createElement('div');
-    itineraryContent.className = 'content-fragment-itinerary-content';
-    const itineraryHtml = contentFragment.itinerary.html
-      || contentFragment.itinerary.plaintext;
-    itineraryContent.innerHTML = itineraryHtml;
-    itineraryContent = setUEAttributes(itineraryContent, 'richtext', 'itinerary'); // Sets UE attributes
-
-    itinerarySection.appendChild(itineraryContent);
-    contentSection.appendChild(itinerarySection);
-  }
-
-  // Gear List
-  if (contentFragment.gearList) {
-    const gearSection = document.createElement('div');
-    gearSection.className = 'content-fragment-gear';
-
-    const gearTitle = document.createElement('h2');
-    gearTitle.textContent = 'What to Bring';
-    gearSection.appendChild(gearTitle);
-
-    let gearContent = document.createElement('div');
-    gearContent.className = 'content-fragment-gear-content';
-    const gearHtml = contentFragment.gearList.html
-      || contentFragment.gearList.plaintext;
-    gearContent.innerHTML = gearHtml;
-    gearContent = setUEAttributes(gearContent, 'richtext', 'gearList'); // Sets UE attributes
-
-    gearSection.appendChild(gearContent);
-    contentSection.appendChild(gearSection);
-  }
-
-  container.appendChild(contentSection);
-  return container;
-}
-
-/**
  * Show error state
  */
 function showError(block, message) {
@@ -231,6 +19,103 @@ function showError(block, message) {
 function showEmpty(block) {
   const emptyMessage = 'No content fragment selected. Use the Universal Editor to select a content fragment.';
   block.innerHTML = `<div class="content-fragment-empty">${emptyMessage}</div>`;
+}
+
+function formatLabel(key) {
+  return key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1');
+}
+
+// item {
+//   _path
+//   title
+//   slug
+//   description {
+//     json
+//     plaintext
+//     html
+//   }
+//   adventureType
+//   tripLength
+//   activity
+//   groupSize
+//   difficulty
+//   price
+//   primaryImage {
+//     ... on ImageRef {
+//       _path
+//       _dynamicUrl
+//     }
+//   }
+//   itinerary {
+//     json
+//     plaintext
+//     html
+//   }
+// }
+
+function createDisplay(contentFragment) {
+  let innerHTML = '';
+  // eslint-disable-next-line no-underscore-dangle
+  const cfPath = contentFragment._path;
+  // eslint-disable-next-line no-underscore-dangle
+  const cfPrimaryImagePath = contentFragment.primaryImage._path;
+
+  innerHTML
+  += `<div class="headless-wrapper">
+    <div class="content-fragment-detail"
+        data-aue-resource="urn:aemconnection:${cfPath}/jcr:content/data/master"
+        data-aue-type="reference" data-aue-label="Surf Camp in Costa Rica in-context">
+        <div class="content-fragment-hero">
+            <div class="content-fragment-image">
+                <picture>
+                    <source srcset="${getAEMHost()}${cfPrimaryImagePath}?width=1200&format=webply&optimize=medium" type="image/webp">
+                    <img src="${getAEMHost()}${cfPrimaryImagePath}?width=1200&format=webply&optimize=medium" alt="${contentFragment.title}" loading="lazy" data-aue-type="media" data-aue-prop="primaryImage">
+                </picture>
+            </div>
+            <div class="content-fragment-title-overlay">
+                <h1 class="content-fragment-title" data-aue-type="text" data-aue-prop="title">${contentFragment.title}</h1>
+            </div>
+        </div>
+        <div class="content-fragment-content">
+            <div class="content-fragment-details-grid">`;
+  const details = ['activity', 'difficulty', 'tripLength', 'groupSize', 'price'];
+  details.forEach((detail) => {
+    if (contentFragment[detail]) {
+      innerHTML += `<div class="content-fragment-detail-item">
+                        <span class="detail-label">${formatLabel(detail)}</span>
+                        <span class="detail-value" data-aue-type="text" data-aue-prop="${detail}">${contentFragment[detail]}</span>
+                    </div>`;
+    }
+  });
+  innerHTML += '</div>';
+  const descriptionKey = 'description';
+  innerHTML
+            += `<div class="content-fragment-${descriptionKey}">
+                <h2>About This Adventure</h2>
+                <div class="content-fragment-${descriptionKey}-content" data-aue-type="richtext" data-aue-prop="${descriptionKey}">
+                    ${contentFragment[descriptionKey].html || contentFragment[descriptionKey].plaintext}
+                </div>
+            </div>`;
+  const itineraryKey = 'itinerary';
+  innerHTML
+            += `<div class="content-fragment-${itineraryKey}">
+                <h2>Itinerary</h2>
+                <div class="content-fragment-${itineraryKey}-content" data-aue-type="richtext" data-aue-prop="${itineraryKey}">
+                    ${contentFragment[itineraryKey].html || contentFragment[itineraryKey].plaintext}
+                </div>
+            </div>`;
+  const gearListKey = 'gearList';
+  innerHTML
+            += `<div class="content-fragment-${gearListKey}">
+                <h2>What to Bring</h2>
+                <div class="content-fragment-${gearListKey}-content" data-aue-type="richtext" data-aue-prop="${gearListKey}">
+                    ${contentFragment[gearListKey].html || contentFragment[gearListKey].plaintext}
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>`;
+  return innerHTML;
 }
 
 /**
@@ -257,13 +142,7 @@ export default async function decorate(block) {
       return;
     }
 
-    // Clear the block and render the content fragment
-    block.textContent = '';
-    const wrapper = document.createElement('div');
-    wrapper.className = 'headless-wrapper';
-    const display = createContentFragmentDisplay(contentFragment);
-    wrapper.appendChild(display);
-    block.appendChild(wrapper);
+    block.innerHTML = createDisplay(contentFragment);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Content Fragment block error:', error);
