@@ -36,7 +36,9 @@
     "filters": [
         {
             "id": "content-fragment-adventure",
-            "components": []
+            "components": [
+                "cf"
+            ]
         }
     ]
 }
