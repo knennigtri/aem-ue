@@ -273,22 +273,9 @@ function showEmpty(block) {
 }
 
 /**
- * Main decoration function
+ * Render the content fragment display
  */
-export default async function decorate(block) {
-  // Get the content fragment path
-  const cfPath = getContentFragmentPath(block);
-
-  if (!cfPath) {
-    showEmpty(block);
-    return;
-  }
-
-  // Add Universal Editor instrumentation to the block itself
-  block.setAttribute('data-aue-resource', `urn:aemconnection:${cfPath}/jcr:content/data/master`);
-  block.setAttribute('data-aue-type', 'resource');
-  block.setAttribute('data-aue-filter', 'cf');
-
+async function renderContentFragment(block, cfPath) {
   // Show loading state
   showLoading(block);
 
@@ -310,4 +297,45 @@ export default async function decorate(block) {
     console.error('Content Fragment block error:', error);
     showError(block, 'Failed to load content fragment');
   }
+}
+
+/**
+ * Main decoration function
+ */
+export default async function decorate(block) {
+  // Get the content fragment path
+  const cfPath = getContentFragmentPath(block);
+
+  if (!cfPath) {
+    showEmpty(block);
+    return;
+  }
+
+  // Add Universal Editor instrumentation to the block itself
+  block.setAttribute('data-aue-resource', `urn:aemconnection:${cfPath}/jcr:content/data/master`);
+  block.setAttribute('data-aue-type', 'resource');
+  block.setAttribute('data-aue-filter', 'cf');
+
+  // Initial render
+  await renderContentFragment(block, cfPath);
+
+  // Listen for Universal Editor content changes and re-render
+  const handleContentChange = () => {
+    // Add a small delay to ensure the content fragment is saved before re-fetching
+    setTimeout(() => {
+      renderContentFragment(block, cfPath);
+    }, 500);
+  };
+
+  // Listen for various Universal Editor events
+  document.addEventListener('aue:content-patch', handleContentChange);
+  document.addEventListener('aue:content-update', handleContentChange);
+  document.addEventListener('aue:ui-publish', handleContentChange);
+
+  // Store cleanup function on the block for potential future use
+  block._ueCleanup = () => {
+    document.removeEventListener('aue:content-patch', handleContentChange);
+    document.removeEventListener('aue:content-update', handleContentChange);
+    document.removeEventListener('aue:ui-publish', handleContentChange);
+  };
 }
