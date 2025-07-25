@@ -283,7 +283,6 @@ async function renderContentFragment(block, cfPath) {
     // Fetch the content fragment
     const contentFragment = await fetchContentFragmentViaGraphQL(cfPath);
     console.error('contentFragment', contentFragment);
-    console.error('contentFragment', JSON.stringify(contentFragment));
 
     if (!contentFragment) {
       showError(block, 'Content fragment not found');

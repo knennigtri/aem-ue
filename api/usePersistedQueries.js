@@ -11,7 +11,7 @@ it.
 const AEM_CONFIG = {
   host: 'https://publish-p156903-e1726641.adobeaemcloud.com',
   endpoint: '/graphql/execute.json',
-  disableCache: false, // Set to true for development
+  disableCache: true, // Set to true for development
 };
 
 const wkndContext = {
@@ -51,6 +51,7 @@ export async function fetchPersistedQuery(persistedQueryName, queryParams) {
         url += `;${key}=${value}`;
       });
     }
+    console.error('Fetched URL', url);
 
     const response = await fetch(url);
 
