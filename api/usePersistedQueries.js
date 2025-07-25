@@ -11,7 +11,7 @@ it.
 const AEM_CONFIG = {
   host: 'https://publish-p156903-e1726641.adobeaemcloud.com',
   endpoint: '/graphql/execute.json',
-  disableCache: true, // Set to true for development
+  disableCache: true, // Set to true for development, false for production
 };
 
 const wkndContext = {
@@ -28,18 +28,9 @@ const wkndContext = {
  * @param {*} queryParameters an optional JavaScript object containing query parameters
  * @returns the GraphQL data or an error message
  */
-export async function fetchPersistedQuery(persistedQueryName, queryParams) {
+export async function fetchPersistedQuery(persistedQueryName, queryParameters) {
   let data;
   let err;
-  let queryParameters = queryParams;
-
-  // Add timestamp for cache busting in development
-  if (AEM_CONFIG.disableCache) {
-    if (queryParameters === undefined) {
-      queryParameters = {};
-    }
-    queryParameters.timestamp = new Date().getTime();
-  }
 
   try {
     // Build the URL for the persisted query
@@ -94,6 +85,11 @@ export async function getAdventureByPath(path) {
     imageWidth: 1200,
     imageQuality: 80,
   };
+
+  // Add cache busting for development
+  if (AEM_CONFIG.disableCache) {
+    queryParameters.timestamp = new Date().getTime();
+  }
 
   const { data, err } = await fetchPersistedQuery(
     `${wkndContext.endpoint}/${wkndContext.query.adventureByPath}`,
