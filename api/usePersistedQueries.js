@@ -86,7 +86,6 @@ export async function fetchPersistedQuery(persistedQueryName, queryParams) {
  * @returns Promise with adventure data or error
  */
 export async function getAdventureByPath(path) {
-  
   const queryParameters = {
     adventurePath: path,
     imageFormat: 'JPG',
