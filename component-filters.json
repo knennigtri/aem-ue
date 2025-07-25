@@ -17,7 +17,7 @@
       "columns",
       "fragment",
       "teaser",
-      "content-fragment"
+      "content-fragments"
     ]
   },
   {
@@ -39,6 +39,12 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "content-fragments",
+    "components": [
+      "content-fragment"
     ]
   }
 ]
