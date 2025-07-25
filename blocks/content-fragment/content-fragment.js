@@ -71,9 +71,9 @@ function createContentFragmentDisplay(contentFragment) {
   container.className = 'content-fragment-detail';
   // eslint-disable-next-line no-underscore-dangle
   container.setAttribute('data-aue-resource', `urn:aemconnection:${contentFragment._path}/jcr:content/data/master`);
-  container.setAttribute('data-aue-type', 'reference');
+  // container.setAttribute('data-aue-type', 'reference'); TODO: I dont think this is needed
   container.setAttribute('data-aue-label', `${contentFragment.title}`);
-  // container.setAttribute('data-aue-filter', 'cf');
+  // container.setAttribute('data-aue-filter', 'cf'); TODO: I dont think this is needed
 
   // Hero section with image and title
   const heroSection = document.createElement('div');
