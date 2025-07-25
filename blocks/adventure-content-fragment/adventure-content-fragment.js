@@ -4,7 +4,7 @@
  * Similar functionality to AdventureDetail.jsx but as a UE block
  */
 // MULTI CHANGE: Updated import to use default export (required for multi-fragment support)
-import getAdventureByPath from '../../api/WKND_persistedQueries.js';
+import { getAdventureByPath } from '../../api/WKND_persistedQueries.js';
 import { getAEMHost } from '../../api/aem-gql-connection.js';
 
 /**
