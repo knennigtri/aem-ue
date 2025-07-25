@@ -72,7 +72,7 @@ function createContentFragmentDisplay(contentFragment) {
   // eslint-disable-next-line no-underscore-dangle
   container.setAttribute('data-aue-resource', `urn:aemconnection:${contentFragment._path}/jcr:content/data/master`);
   container.setAttribute('data-aue-type', 'reference');
-  container.setAttribute('data-aue-label', `${contentFragment.title}`);
+  // container.setAttribute('data-aue-label', `${contentFragment.title}`);
   container.setAttribute('data-aue-filter', 'cf');
 
   // Hero section with image and title
