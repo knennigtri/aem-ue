@@ -6,9 +6,7 @@ NOTICE: Adobe permits you to use, modify, and distribute this file in
 accordance with the terms of the Adobe license agreement accompanying
 it.
 */
-import { fetchPersistedQuery } from './aem-gql-connection.js';
-
-const CACHE_BUSTER = false; // Set to true for development, false for production
+import { fetchPersistedQuery, getCDNCacheBuster } from './aem-gql-connection.js';
 
 const WKND_CONTEXT = {
   endpoint: 'wknd-shared',
@@ -33,7 +31,7 @@ async function getAdventureByPath(path) {
   };
 
   // Add cache busting for development
-  if (CACHE_BUSTER) {
+  if (getCDNCacheBuster()) {
     queryParameters.timestamp = new Date().getTime();
   }
 
@@ -58,6 +56,11 @@ async function getAdventureBySlug(slug) {
   const queryParameters = {
     adventureSlug: slug,
   };
+
+  // Add cache busting for development
+  if (getCDNCacheBuster()) {
+    queryParameters.timestamp = new Date().getTime();
+  }
 
   const { data, err } = await fetchPersistedQuery(
     `${WKND_CONTEXT.endpoint}/${WKND_CONTEXT.query.adventureBySlug}`,

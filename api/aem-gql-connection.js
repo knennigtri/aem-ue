@@ -14,6 +14,13 @@ function getAEMHost() {
   return getAEMPublish();
 }
 
+function getCDNCacheBuster() {
+  if (window.location.hostname.endsWith('adobeaemcloud.com')) {
+    return true;
+  }
+  return false;
+}
+
 /**
  * Private, shared function that makes GraphQL requests using native fetch.
  *
@@ -63,5 +70,5 @@ async function fetchPersistedQuery(persistedQueryName, queryParameters) {
 }
 
 export {
-  getAEMHost, getAEMPublish, getAEMAuthor, fetchPersistedQuery,
+  getAEMHost, getAEMPublish, getAEMAuthor, getCDNCacheBuster, fetchPersistedQuery,
 };
