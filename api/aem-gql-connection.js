@@ -37,7 +37,7 @@ async function fetchPersistedQuery(persistedQueryName, queryParameters) {
         url += `;${key}=${value}`;
       });
     }
-    
+
     const response = await fetch(url);
 
     if (!response.ok) {
