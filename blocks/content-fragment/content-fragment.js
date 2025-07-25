@@ -47,6 +47,16 @@ async function fetchContentFragmentViaGraphQL(cfPath) {
 }
 
 /**
+ * Sets UE attributes on an element
+ * Allows for In-context editing of Content Fragments
+ */
+function setUEAttributes(element, type, property) {
+  element.setAttribute('data-aue-type', type); // CFM type
+  element.setAttribute('data-aue-prop', property); // CFM name
+  return element;
+}
+
+/**
  * Create a detail item for the details grid
  */
 function createDetailItem(label, value, property) {
@@ -57,11 +67,10 @@ function createDetailItem(label, value, property) {
   labelEl.className = 'detail-label';
   labelEl.textContent = label;
 
-  const valueEl = document.createElement('span');
+  let valueEl = document.createElement('span');
   valueEl.className = 'detail-value';
   valueEl.textContent = value;
-  valueEl.setAttribute('data-aue-type', 'text'); // Content Fragment model type
-  valueEl.setAttribute('data-aue-prop', property); // Content Fragment model name
+  valueEl = setUEAttributes(valueEl, 'text', property);
 
   item.appendChild(labelEl);
   item.appendChild(valueEl);
@@ -87,21 +96,19 @@ function createContentFragmentDisplay(contentFragment) {
     const picture = document.createElement('picture');
 
     // Create WebP source
-    const source = document.createElement('source');
+    let source = document.createElement('source');
     // eslint-disable-next-line no-underscore-dangle
     source.srcset = `https://publish-p156903-e1726641.adobeaemcloud.com${contentFragment.primaryImage._path}?width=1200&format=webply&optimize=medium`;
     source.type = 'image/webp';
-    source.setAttribute('data-aue-type', 'media'); // Content Fragment model type
-    source.setAttribute('data-aue-prop', 'primaryImage'); // Content Fragment model name
+    source = setUEAttributes(source, 'media', 'primaryImage'); // Sets UE attributes
 
     // Create fallback img
-    const img = document.createElement('img');
+    let img = document.createElement('img');
     // eslint-disable-next-line no-underscore-dangle
     img.src = `https://publish-p156903-e1726641.adobeaemcloud.com${contentFragment.primaryImage._path}?width=1200&format=webply&optimize=medium`;
     img.alt = contentFragment.title;
     img.loading = 'lazy';
-    img.setAttribute('data-aue-type', 'media'); // Content Fragment model type
-    img.setAttribute('data-aue-prop', 'primaryImage'); // Content Fragment model name
+    img = setUEAttributes(img, 'media', 'primaryImage'); // Sets UE attributes
 
     picture.appendChild(source);
     picture.appendChild(img);
@@ -113,11 +120,10 @@ function createContentFragmentDisplay(contentFragment) {
   const titleOverlay = document.createElement('div');
   titleOverlay.className = 'content-fragment-title-overlay';
 
-  const title = document.createElement('h1');
+  let title = document.createElement('h1');
   title.className = 'content-fragment-title';
   title.textContent = contentFragment.title;
-  title.setAttribute('data-aue-type', 'text'); // Content Fragment model type
-  title.setAttribute('data-aue-prop', 'title'); // Content Fragment model name
+  title = setUEAttributes(title, 'text', 'title'); // Sets UE attributes
 
   titleOverlay.appendChild(title);
   heroSection.appendChild(titleOverlay);
@@ -192,13 +198,12 @@ function createContentFragmentDisplay(contentFragment) {
     descriptionTitle.textContent = 'About This Adventure';
     descriptionSection.appendChild(descriptionTitle);
 
-    const descriptionContent = document.createElement('div');
+    let descriptionContent = document.createElement('div');
     descriptionContent.className = 'content-fragment-description-content';
     const descriptionHtml = contentFragment.description.html
       || contentFragment.description.plaintext;
     descriptionContent.innerHTML = descriptionHtml;
-    descriptionContent.setAttribute('data-aue-type', 'richtext'); // Content Fragment model type
-    descriptionContent.setAttribute('data-aue-prop', 'description'); // Content Fragment model name
+    descriptionContent = setUEAttributes(descriptionContent, 'richtext', 'description'); // Sets UE attributes
 
     descriptionSection.appendChild(descriptionContent);
     contentSection.appendChild(descriptionSection);
@@ -213,13 +218,12 @@ function createContentFragmentDisplay(contentFragment) {
     itineraryTitle.textContent = 'Itinerary';
     itinerarySection.appendChild(itineraryTitle);
 
-    const itineraryContent = document.createElement('div');
+    let itineraryContent = document.createElement('div');
     itineraryContent.className = 'content-fragment-itinerary-content';
     const itineraryHtml = contentFragment.itinerary.html
       || contentFragment.itinerary.plaintext;
     itineraryContent.innerHTML = itineraryHtml;
-    itineraryContent.setAttribute('data-aue-type', 'richtext'); // Content Fragment model type
-    itineraryContent.setAttribute('data-aue-prop', 'itinerary'); // Content Fragment model name
+    itineraryContent = setUEAttributes(itineraryContent, 'richtext', 'itinerary'); // Sets UE attributes
 
     itinerarySection.appendChild(itineraryContent);
     contentSection.appendChild(itinerarySection);
@@ -234,13 +238,12 @@ function createContentFragmentDisplay(contentFragment) {
     gearTitle.textContent = 'What to Bring';
     gearSection.appendChild(gearTitle);
 
-    const gearContent = document.createElement('div');
+    let gearContent = document.createElement('div');
     gearContent.className = 'content-fragment-gear-content';
     const gearHtml = contentFragment.gearList.html
       || contentFragment.gearList.plaintext;
     gearContent.innerHTML = gearHtml;
-    gearContent.setAttribute('data-aue-type', 'richtext'); // Content Fragment model type
-    gearContent.setAttribute('data-aue-prop', 'gearList'); // Content Fragment model name
+    gearContent = setUEAttributes(gearContent, 'richtext', 'gearList'); // Sets UE attributes
 
     gearSection.appendChild(gearContent);
     contentSection.appendChild(gearSection);
