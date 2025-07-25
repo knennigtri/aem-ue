@@ -10,15 +10,15 @@ import { getAdventureByPath } from '../../api/usePersistedQueries.js';
  */
 function getContentFragmentPath(block) {
   // Check if there's a content fragment reference in the block data
-  const cfReference = block.querySelector('a')?.getAttribute('href');
+  let cfReference = block.querySelector('a')?.getAttribute('href');
   if (cfReference) {
+    cfReference = cfReference.replace(/\.html$/, ''); // Strip .html extension if present (Universal Editor adds this)
     return cfReference;
   }
 
   // Check for data attributes
   let cfPath = block.dataset.picker || block.dataset.contentFragment;
-  // Strip .html extension if present (Universal Editor adds this)
-  cfPath = cfPath.replace(/\.html$/, '');
+  cfPath = cfPath.replace(/\.html$/, ''); // Strip .html extension if present (Universal Editor adds this)
 
   if (cfPath) {
     return cfPath;
