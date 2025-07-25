@@ -3,7 +3,8 @@
  * Displays a single content fragment selected via Universal Editor picker
  * Similar functionality to AdventureDetail.jsx but as a UE block
  */
-import { getAdventureByPath } from '../../api/WKND_persistedQueries.js';
+// MULTI CHANGE: Updated import to use default export (required for multi-fragment support)
+import getAdventureByPath from '../../api/WKND_persistedQueries.js';
 import { getAEMHost } from '../../api/aem-gql-connection.js';
 
 /**
@@ -26,7 +27,7 @@ function formatLabel(key) {
 }
 
 function createDisplay(contentfragment) {
-  const { keys } = contentfragment; // String version of keys in adventureByPath query
+  const { keys } = contentfragment;
   const { data } = contentfragment;
 
   let innerHTML = '';
@@ -85,38 +86,69 @@ function createDisplay(contentfragment) {
 
 /**
  * Main decoration function
+ * MULTI CHANGE: Updated to support multiple content fragments when multi=true is set
  */
 export default async function decorate(block) {
-  // Get the content fragment path from the generated DOM (Universal Editor)
-  let cfPath = block.querySelector('a')?.getAttribute('href');
-  if (!cfPath) {
+  // MULTI CHANGE: Get ALL content fragment paths instead of just the first one
+  // This supports multi=true by finding all <a> links in the block
+  const cfLinks = Array.from(block.querySelectorAll('a'));
+
+  if (cfLinks.length === 0) {
     showEmpty(block);
     return;
   }
-  cfPath = cfPath.replace(/\.html$/, ''); // Strip .html extension if present (Universal Editor adds this)
+
+  // MULTI CHANGE: Extract paths from ALL links, not just the first one
+  // Map through all links and extract their href attributes
+  const cfPaths = cfLinks.map((link) => {
+    const path = link.getAttribute('href');
+    return path ? path.replace(/\.html$/, '') : null; // Strip .html extension
+  }).filter((path) => path !== null);
+
+  if (cfPaths.length === 0) {
+    showEmpty(block);
+    return;
+  }
 
   try {
-    // Fetch the content fragment via persisted query
-    // from aem-gql-connection.js (contains author/publish endpoints)
-    const contentFragment = await getAdventureByPath(cfPath);
+    // MULTI CHANGE: Fetch ALL content fragments in parallel instead of just one
+    // This improves performance when loading multiple fragments
+    const contentFragmentPromises = cfPaths.map((path) => getAdventureByPath(path));
+    const contentFragments = await Promise.all(contentFragmentPromises);
 
-    if (!contentFragment) {
-      showError(block, 'Content fragment not found');
+    // MULTI CHANGE: Filter out any failed requests to handle partial failures gracefully
+    const validFragments = contentFragments.filter((fragment) => fragment !== null);
+
+    if (validFragments.length === 0) {
+      showError(block, 'No valid content fragments found');
       return;
     }
 
-    /*
-    Because the content fragment is a reference property,
-      we can rewrite the entire block with the content fragment data
-    Caution with doing this with default content and inferred elements
-      since UE it renders the block with special aue attributes
-    Learn more about inferred elements here:
-      https://www.aem.live/developer/component-model-definitions#creating-semantic-content-models-for-blocks
-    */
-    block.innerHTML = createDisplay(contentFragment);
+    // MULTI CHANGE: Handle both single and multiple fragment display logic
+    // This maintains backward compatibility while supporting multi=true
+    let combinedHTML = '';
+
+    if (validFragments.length === 1) {
+      // Single fragment - use existing layout (backward compatibility)
+      combinedHTML = createDisplay(validFragments[0]);
+    } else {
+      // MULTI CHANGE: Multiple fragments - create a container with grid/list layout
+      // Each fragment gets its own container with an index for styling/JS targeting
+      combinedHTML = '<div class="content-fragments-container">';
+      validFragments.forEach((fragment, index) => {
+        combinedHTML += `<div class="content-fragment-item" data-fragment-index="${index}">`;
+        combinedHTML += createDisplay(fragment);
+        combinedHTML += '</div>';
+      });
+      combinedHTML += '</div>';
+    }
+
+    // MULTI CHANGE: Set the combined HTML for all fragments
+    block.innerHTML = combinedHTML;
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Content Fragment block error:', error);
-    showError(block, 'Failed to load content fragment');
+    // MULTI CHANGE: Updated error message to reflect multiple fragment support
+    showError(block, 'Failed to load content fragments');
   }
 }
