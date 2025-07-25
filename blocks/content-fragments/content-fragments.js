@@ -84,6 +84,10 @@ function createDetailItem(label, value, property) {
 function createContentFragmentDisplay(contentFragment) {
   const container = document.createElement('div');
   container.className = 'content-fragment-detail';
+  // eslint-disable-next-line no-underscore-dangle
+  container.setAttribute('data-aue-resource', `urn:aemconnection:${contentFragment._path}/jcr:content/data/master`);
+  container.setAttribute('data-aue-type', 'resource');
+  container.setAttribute('data-aue-filter', 'cf');
 
   // Hero section with image and title
   const heroSection = document.createElement('div');
@@ -315,9 +319,9 @@ export default async function decorate(block) {
   }
 
   // Add Universal Editor instrumentation to the block itself
-  block.setAttribute('data-aue-resource', `urn:aemconnection:${cfPath}/jcr:content/data/master`);
-  block.setAttribute('data-aue-type', 'resource');
-  block.setAttribute('data-aue-filter', 'cf');
+  // block.setAttribute('data-aue-resource', `urn:aemconnection:${cfPath}/jcr:content/data/master`);
+  // block.setAttribute('data-aue-type', 'resource');
+  // block.setAttribute('data-aue-filter', 'cf');
   // block.setAttribute('data-aue-label', `${cfPath}`); //Sets Properties title in UE
 
   // Initial render
