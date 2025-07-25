@@ -10,6 +10,7 @@
                         "template": {
                             "name": "Adventure Content Fragment",
                             "model": "adventure-content-fragment",
+                            "path": "/content/dam/wknd-shared/en/adventures/surf-camp-in-costa-rica/surf-camp-costa-rica",
                             "filter": "cf"
                         }
                     }
@@ -33,5 +34,12 @@
             ]
         }
     ],
-    "filters": []
+    "filters": [
+        {
+            "id": "adventure-content-fragment",
+            "components": [
+                "cf"
+            ]
+        }
+    ]
 }
