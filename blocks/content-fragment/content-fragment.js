@@ -282,8 +282,11 @@ async function renderContentFragment(block, cfPath) {
 
     // Clear the block and render the content fragment
     block.textContent = '';
+    const wrapper = document.createElement('div');
+    wrapper.className = 'headless-wrapper';
     const display = createContentFragmentDisplay(contentFragment);
-    block.appendChild(display);
+    wrapper.appendChild(display);
+    block.appendChild(wrapper);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Content Fragment block error:', error);
