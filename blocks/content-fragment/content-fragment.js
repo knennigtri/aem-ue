@@ -3,7 +3,7 @@
  * Displays a single content fragment selected via Universal Editor picker
  * Similar functionality to AdventureDetail.jsx but as a UE block
  */
-import { getAdventureByPath } from '../../api/usePersistedQueries.js';
+import { getAdventureByPath, AEM_CONFIG } from '../../api/usePersistedQueries.js';
 
 /**
  * Extract content fragment path from the block configuration
@@ -98,14 +98,14 @@ function createContentFragmentDisplay(contentFragment) {
     // Create WebP source
     let source = document.createElement('source');
     // eslint-disable-next-line no-underscore-dangle
-    source.srcset = `https://publish-p156903-e1726641.adobeaemcloud.com${contentFragment.primaryImage._path}?width=1200&format=webply&optimize=medium`;
+    source.srcset = `${AEM_CONFIG.host}${contentFragment.primaryImage._path}?width=1200&format=webply&optimize=medium`;
     source.type = 'image/webp';
     source = setUEAttributes(source, 'media', 'primaryImage'); // Sets UE attributes
 
     // Create fallback img
     let img = document.createElement('img');
     // eslint-disable-next-line no-underscore-dangle
-    img.src = `https://publish-p156903-e1726641.adobeaemcloud.com${contentFragment.primaryImage._path}?width=1200&format=webply&optimize=medium`;
+    img.src = `${AEM_CONFIG.host}${contentFragment.primaryImage._path}?width=1200&format=webply&optimize=medium`;
     img.alt = contentFragment.title;
     img.loading = 'lazy';
     img = setUEAttributes(img, 'media', 'primaryImage'); // Sets UE attributes
@@ -316,9 +316,9 @@ export default async function decorate(block) {
   }
 
   // Add Universal Editor instrumentation to the block itself
-  block.setAttribute('data-aue-resource', `urn:aemconnection:${cfPath}/jcr:content/data/master`);
-  block.setAttribute('data-aue-type', 'resource');
-  block.setAttribute('data-aue-filter', 'cf');
+  // block.setAttribute('data-aue-resource', `urn:aemconnection:${cfPath}/jcr:content/data/master`);
+  // block.setAttribute('data-aue-type', 'resource');
+  // block.setAttribute('data-aue-filter', 'cf');
 
   // Initial render
   await renderContentFragment(block, cfPath);

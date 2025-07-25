@@ -8,7 +8,7 @@ it.
 */
 
 // Configuration for Edge Delivery Services
-const AEM_CONFIG = {
+export const AEM_CONFIG = {
   host: 'https://publish-p156903-e1726641.adobeaemcloud.com',
   endpoint: '/graphql/execute.json',
   disableCache: true, // Set to true for development, false for production

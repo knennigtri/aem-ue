@@ -114,14 +114,18 @@
   margin-bottom: 3rem;
 }
 
-.content-fragment-description h2,
-.content-fragment-itinerary h2,
-.content-fragment-gear h2 {
+.content-fragment-description-content h2,
+.content-fragment-itinerary-content h2,
+.content-fragment-gear-content h2 {
   font-size: 1.5rem;
   font-weight: 600;
   margin: 0 0 1rem;
   color: var(--heading-color);
   padding-bottom: 0.5rem;
+  
+  &::after {
+     border-bottom: none;
+  }
 }
 
 .content-fragment-description-content,
