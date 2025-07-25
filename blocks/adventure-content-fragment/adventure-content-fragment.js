@@ -103,14 +103,6 @@ function createDisplay(contentFragment) {
                 <div class="content-fragment-${itineraryKey}-content" data-aue-type="richtext" data-aue-prop="${itineraryKey}">
                     ${contentFragment[itineraryKey].html || contentFragment[itineraryKey].plaintext}
                 </div>
-            </div>`;
-  const gearListKey = 'gearList';
-  innerHTML
-            += `<div class="content-fragment-${gearListKey}">
-                <h2>What to Bring</h2>
-                <div class="content-fragment-${gearListKey}-content" data-aue-type="richtext" data-aue-prop="${gearListKey}">
-                    ${contentFragment[gearListKey].html || contentFragment[gearListKey].plaintext}
-                </div>
             </div>
         </div>
     </div>
