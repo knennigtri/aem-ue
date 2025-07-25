@@ -157,6 +157,7 @@
         "name": "path",
         "value": "",
         "label": "Content Fragment path",
+        "variationName": "contentFragmentVariation",
         "validation": {
           "rootPath": "/content/dam/wknd-shared/en/adventures"
         }
