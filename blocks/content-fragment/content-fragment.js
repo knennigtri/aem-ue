@@ -16,7 +16,10 @@ function getContentFragmentPath(block) {
   }
 
   // Check for data attributes
-  const cfPath = block.dataset.picker || block.dataset.contentFragment;
+  let cfPath = block.dataset.picker || block.dataset.contentFragment;
+  // Strip .html extension if present (Universal Editor adds this)
+  cfPath = cfPath.replace(/\.html$/, '');
+  
   if (cfPath) {
     return cfPath;
   }
