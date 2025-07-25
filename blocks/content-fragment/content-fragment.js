@@ -49,30 +49,30 @@ async function fetchContentFragmentViaGraphQL(cfPath) {
 /**
  * Fetch content fragment data using AEM's Content Fragment API
  */
-async function fetchContentFragment(cfPath) {
-  if (!cfPath) {
-    return null;
-  }
+// async function fetchContentFragment(cfPath) {
+//   if (!cfPath) {
+//     return null;
+//   }
 
-  try {
-    // Convert CF path to API endpoint
-    const apiPath = `${cfPath.replace('/content/dam/', '/api/assets/')}.json`;
-    const response = await fetch(apiPath);
+//   try {
+//     // Convert CF path to API endpoint
+//     const apiPath = `${cfPath.replace('/content/dam/', '/api/assets/')}.json`;
+//     const response = await fetch(apiPath);
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
+//     if (!response.ok) {
+//       throw new Error(`HTTP error! status: ${response.status}`);
+//     }
 
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('Failed to fetch content fragment:', error);
+//     const data = await response.json();
+//     return data;
+//   } catch (error) {
+//     // eslint-disable-next-line no-console
+//     console.error('Failed to fetch content fragment:', error);
 
-    // Fallback: try GraphQL approach
-    return fetchContentFragmentViaGraphQL(cfPath);
-  }
-}
+//     // Fallback: try GraphQL approach
+//     return fetchContentFragmentViaGraphQL(cfPath);
+//   }
+// }
 
 /**
  * Create a detail item for the details grid
@@ -322,7 +322,9 @@ export default async function decorate(block) {
 
   try {
     // Fetch the content fragment
-    const contentFragment = await fetchContentFragment(cfPath);
+    // const contentFragment = await fetchContentFragment(cfPath);
+    console.error('cfPath before fetchContentFragmentViaGraphQL', cfPath);
+    const contentFragment = await fetchContentFragmentViaGraphQL(cfPath);
 
     if (!contentFragment) {
       showError(block, 'Content fragment not found');
