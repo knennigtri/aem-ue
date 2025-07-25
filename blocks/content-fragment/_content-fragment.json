@@ -33,5 +33,10 @@
             ]
         }
     ],
-    "filters": []
+    "filters": [
+        {
+            "id": "content-fragment-adventure",
+            "components": []
+        }
+    ]
 }

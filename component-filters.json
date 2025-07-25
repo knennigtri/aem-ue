@@ -40,5 +40,9 @@
       "button",
       "title"
     ]
+  },
+  {
+    "id": "content-fragment-adventure",
+    "components": []
   }
 ]
