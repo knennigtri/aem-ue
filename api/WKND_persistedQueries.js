@@ -16,6 +16,21 @@ const WKND_CONTEXT = {
   },
 };
 
+// keys as strings for adventureByPath query
+const adventureByPathKeys = {
+  title: 'title',
+  slug: 'slug',
+  description: 'description',
+  adventureType: 'adventureType',
+  tripLength: 'tripLength',
+  activity: 'activity',
+  groupSize: 'groupSize',
+  difficulty: 'difficulty',
+  price: 'price',
+  primaryImage: 'primaryImage',
+  itinerary: 'itinerary',
+};
+
 /**
  * Fetch adventure by path - vanilla JavaScript version
  * @param {String} path the content fragment path
@@ -44,14 +59,14 @@ async function getAdventureByPath(path) {
     throw new Error(err);
   }
 
-  return data?.adventureByPath?.item;
+  return { data: data?.adventureByPath?.item, keys: adventureByPathKeys };
 }
 
-/**
- * Fetch adventure by slug - vanilla JavaScript version
- * @param {String} slug the content fragment slug
- * @returns Promise with adventure data or error
- */
+// keys as strings for adventureBySlug query
+const adventureBySlugKeys = {
+  title: 'title',
+};
+
 async function getAdventureBySlug(slug) {
   const queryParameters = {
     adventureSlug: slug,
@@ -71,7 +86,7 @@ async function getAdventureBySlug(slug) {
     throw new Error(err);
   }
 
-  return data?.adventureBySlug?.item;
+  return { data: data?.adventureBySlug?.item, keys: adventureBySlugKeys };
 }
 
 export { getAdventureByPath, getAdventureBySlug };
