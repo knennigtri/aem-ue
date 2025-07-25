@@ -109,14 +109,12 @@
 
 /* Content Sections */
 .content-fragment-description,
-.content-fragment-itinerary,
-.content-fragment-gear {
+.content-fragment-itinerary {
   margin-bottom: 3rem;
 }
 
 .content-fragment-description-content h2,
-.content-fragment-itinerary-content h2,
-.content-fragment-gear-content h2 {
+.content-fragment-itinerary-content h2 {
   font-size: 1.5rem;
   font-weight: 600;
   margin: 0 0 1rem;
@@ -129,8 +127,7 @@
 }
 
 .content-fragment-description-content,
-.content-fragment-itinerary-content,
-.content-fragment-gear-content {
+.content-fragment-itinerary-content {
   font-size: 1rem;
   line-height: 1.6;
   color: var(--text-color);
@@ -143,54 +140,26 @@
 }
 
 .content-fragment-description-content:focus,
-.content-fragment-itinerary-content:focus,
-.content-fragment-gear-content:focus {
+.content-fragment-itinerary-content:focus {
   outline: none;
   background: white;
 }
 
 /* Rich text content styling */
 .content-fragment-description-content p,
-.content-fragment-itinerary-content p,
-.content-fragment-gear-content p {
+.content-fragment-itinerary-content p {
   margin: 0 0 1rem;
 }
 
 .content-fragment-description-content ul,
-.content-fragment-itinerary-content ul,
-.content-fragment-gear-content ul {
+.content-fragment-itinerary-content ul {
   margin: 0 0 1rem 1.5rem;
   padding: 0;
 }
 
 .content-fragment-description-content li,
-.content-fragment-itinerary-content li,
-.content-fragment-gear-content li {
+.content-fragment-itinerary-content li {
   margin-bottom: 0.5rem;
-}
-
-/* Loading State */
-.content-fragment-loading {
-  text-align: center;
-  padding: 4rem 2rem;
-  color: var(--text-color);
-  font-size: 1.1rem;
-}
-
-.content-fragment-loading::after {
-  content: '';
-  display: inline-block;
-  width: 1rem;
-  height: 1rem;
-  margin-left: 0.5rem;
-  border: 2px solid var(--color-gray-300);
-  border-radius: 50%;
-  animation: content-fragment-spin 1s linear infinite;
-}
-
-@keyframes content-fragment-spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
 }
 
 /* Error State */
@@ -242,8 +211,7 @@
   }
   
   .content-fragment-description,
-  .content-fragment-itinerary,
-  .content-fragment-gear {
+  .content-fragment-itinerary {
     margin-bottom: 2rem;
   }
 }
@@ -271,19 +239,6 @@
   }
 }
 
-/* Universal Editor specific styles */
-.content-fragment-detail[itemscope] {
-  position: relative;
-}
-
-.content-fragment-title[itemprop]:focus,
-.detail-value[itemprop]:focus,
-.content-fragment-description-content[itemprop]:focus,
-.content-fragment-itinerary-content[itemprop]:focus,
-.content-fragment-gear-content[itemprop]:focus {
-  outline-offset: 2px;
-}
-
 /* Focus management for Universal Editor */
 .content-fragment-detail:focus-within {
   position: relative;
@@ -300,8 +255,7 @@
 @media (prefers-contrast: more) {
   .content-fragment-details-grid,
   .content-fragment-description-content,
-  .content-fragment-itinerary-content,
-  .content-fragment-gear-content {
+  .content-fragment-itinerary-content {
     border-width: 2px;
   }
   
@@ -314,12 +268,7 @@
 @media (prefers-reduced-motion: reduce) {
   .detail-value,
   .content-fragment-description-content,
-  .content-fragment-itinerary-content,
-  .content-fragment-gear-content {
+  .content-fragment-itinerary-content {
     transition: none;
-  }
-  
-  .content-fragment-loading::after {
-    animation: none;
   }
 } 
