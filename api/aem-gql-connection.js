@@ -1,9 +1,9 @@
 function getAEMPublish() {
-  return 'https://publish-p137825-e1511252.adobeaemcloud.com';
+  return 'https://publish-p156903-e1726641.adobeaemcloud.com/';
 }
 
 function getAEMAuthor() {
-  return 'https://author-p137825-e1511252.adobeaemcloud.com';
+  return 'https://author-p156903-e1726641.adobeaemcloud.com/';
 }
 
 // Dynamic switching for Universal Editor (author) and .aem.page/aem.live (publish)
@@ -37,7 +37,7 @@ async function fetchPersistedQuery(persistedQueryName, queryParameters) {
         url += `;${key}=${value}`;
       });
     }
-
+    
     const response = await fetch(url);
 
     if (!response.ok) {
