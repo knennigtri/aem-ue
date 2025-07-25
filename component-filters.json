@@ -17,7 +17,7 @@
       "columns",
       "fragment",
       "teaser",
-      "content-fragments"
+      "content-fragment-adventure"
     ]
   },
   {
@@ -39,12 +39,6 @@
       "image",
       "button",
       "title"
-    ]
-  },
-  {
-    "id": "content-fragments",
-    "components": [
-      "content-fragment"
     ]
   }
 ]

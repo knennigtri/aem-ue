@@ -188,14 +188,13 @@
     ]
   },
   {
-    "id": "content-fragment",
+    "id": "content-fragment-adventure",
     "fields": [
       {
         "component": "aem-content-fragment",
-        "name": "picker",
-        "label": "Content Fragment Picker",
-        "valueType": "string",
-        "variationName": "contentFragmentVariation",
+        "name": "path",
+        "value": "",
+        "label": "Content Fragment path",
         "validation": {
           "rootPath": "/content/dam/wknd-shared/en/adventures"
         }
