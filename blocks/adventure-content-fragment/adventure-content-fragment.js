@@ -87,13 +87,12 @@ function createDisplay(contentfragment) {
  * Main decoration function
  */
 export default async function decorate(block) {
-  // Get the content fragment path from the generated DOM (Universal Editor)
-  let cfPath = block.querySelector('a')?.getAttribute('href');
+  // Get the content fragment path from the UE generated content in the DOM
+  const cfPath = block.querySelector('a')?.textContent;
   if (!cfPath) {
     showEmpty(block);
     return;
   }
-  cfPath = cfPath.replace(/\.html$/, ''); // Strip .html extension if present (Universal Editor adds this)
 
   try {
     // Fetch the content fragment via persisted query
