@@ -150,6 +150,21 @@
     ]
   },
   {
+    "id": "adventure-content-fragment",
+    "fields": [
+      {
+        "component": "aem-content-fragment",
+        "name": "path",
+        "value": "",
+        "label": "Content Fragment path",
+        "variationName": "contentFragmentVariation",
+        "validation": {
+          "rootPath": "/content/dam/wknd-shared/en/adventures"
+        }
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {

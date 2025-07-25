@@ -20,8 +20,10 @@ const axios = require('axios');
         },
       },
     );
+    // eslint-disable-next-line no-console
     console.log('✅ Cache cleared:', response.data);
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.error('❌ Failed to clear cache:', err.response?.data || err.message);
     process.exit(1);
   }
