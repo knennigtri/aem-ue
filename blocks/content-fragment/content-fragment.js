@@ -69,8 +69,9 @@ function createDetailItem(label, value, property) {
 function createContentFragmentDisplay(contentFragment) {
   const container = document.createElement('div');
   container.className = 'content-fragment-detail';
-  // eslint-disable-next-line no-underscore-dangle
+
   // Required for CF Editor icon and Content Fragment fields to show up in Properties
+  // eslint-disable-next-line no-underscore-dangle
   container.setAttribute('data-aue-resource', `urn:aemconnection:${contentFragment._path}/jcr:content/data/master`);
   container.setAttribute('data-aue-type', 'reference');
   container.setAttribute('data-aue-label', `${contentFragment.title}`);
