@@ -3,7 +3,8 @@
  * Displays a single content fragment selected via Universal Editor picker
  * Similar functionality to AdventureDetail.jsx but as a UE block
  */
-import { getAdventureByPath, AEM_CONFIG } from '../../api/usePersistedQueries.js';
+import { getAdventureByPath } from '../../api/WKND_persistedQueries.js';
+import { getAEMHost } from '../../api/aem-gql-connection.js';
 
 /**
  * Sets UE attributes on an element
@@ -63,13 +64,13 @@ function createContentFragmentDisplay(contentFragment) {
     // Create WebP source
     const source = document.createElement('source');
     // eslint-disable-next-line no-underscore-dangle
-    source.srcset = `${AEM_CONFIG.host}${contentFragment.primaryImage._path}?width=1200&format=webply&optimize=medium`;
+    source.srcset = `${getAEMHost()}${contentFragment.primaryImage._path}?width=1200&format=webply&optimize=medium`;
     source.type = 'image/webp';
 
     // Create fallback img
     let img = document.createElement('img');
     // eslint-disable-next-line no-underscore-dangle
-    img.src = `${AEM_CONFIG.host}${contentFragment.primaryImage._path}?width=1200&format=webply&optimize=medium`;
+    img.src = `${getAEMHost()}${contentFragment.primaryImage._path}?width=1200&format=webply&optimize=medium`;
     img.alt = contentFragment.title;
     img.loading = 'lazy';
     img = setUEAttributes(img, 'media', 'primaryImage'); // Sets UE attributes
@@ -233,9 +234,20 @@ function showEmpty(block) {
 }
 
 /**
- * Render the content fragment display
+ * Main decoration function
  */
-async function renderContentFragment(block, cfPath) {
+export default async function decorate(block) {
+  // Get the content fragment path
+  let cfPath = block.querySelector('a')?.getAttribute('href');
+  if (cfPath) {
+    cfPath = cfPath.replace(/\.html$/, ''); // Strip .html extension if present (Universal Editor adds this)
+  }
+
+  if (!cfPath) {
+    showEmpty(block);
+    return;
+  }
+
   try {
     // Fetch the content fragment
     const contentFragment = await getAdventureByPath(cfPath);
@@ -257,36 +269,4 @@ async function renderContentFragment(block, cfPath) {
     console.error('Content Fragment block error:', error);
     showError(block, 'Failed to load content fragment');
   }
-}
-
-/**
- * Main decoration function
- */
-export default async function decorate(block) {
-  // Get the content fragment path
-  let cfPath = block.querySelector('a')?.getAttribute('href');
-  if (cfPath) {
-    cfPath = cfPath.replace(/\.html$/, ''); // Strip .html extension if present (Universal Editor adds this)
-  }
-
-  if (!cfPath) {
-    showEmpty(block);
-    return;
-  }
-
-  // Initial render
-  await renderContentFragment(block, cfPath);
-
-  // Listen for Universal Editor content changes and re-render
-  // const handleContentChange = () => {
-  //   // Add a small delay to ensure the content fragment is saved before re-fetching
-  //   setTimeout(() => {
-  //     renderContentFragment(block, cfPath);
-  //   }, 500);
-  // };
-
-  // // Listen for various Universal Editor events
-  // document.addEventListener('aue:content-patch', handleContentChange);
-  // document.addEventListener('aue:content-update', handleContentChange);
-  // document.addEventListener('aue:ui-publish', handleContentChange);
 }
