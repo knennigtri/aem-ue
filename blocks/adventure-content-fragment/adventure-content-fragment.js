@@ -39,7 +39,7 @@ function createDisplay(contentfragment) {
   // data-aue-resource
   //    Connects to the source content fragment for editing capabilities in the Universal Editor
   // data-aue-type
-  //    Tells the Universal Editor this is a reference item\
+  //    Tells the Universal Editor this is a reference item
   // data-aue-label
   //    Title of the phantom reference item under the block in the Universal Editor Content Tree
   innerHTML
