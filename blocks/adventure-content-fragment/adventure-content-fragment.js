@@ -36,13 +36,26 @@ function createDisplay(contentfragment) {
   // eslint-disable-next-line no-underscore-dangle
   const cfPath = data._path;
 
+  // data-aue-resource
+  //    Connects to the source content fragment for editing capabilities in the Universal Editor
+  // data-aue-type
+  //    Tells the Universal Editor this is a reference item\
+  // data-aue-label
+  //    Title of the phantom reference item under the block in the Universal Editor Content Tree
   innerHTML
   += `<div class="headless-wrapper">
     <div class="content-fragment-detail"
-        data-aue-resource="urn:aemconnection:${cfPath}/jcr:content/data/master"
-        data-aue-type="reference" data-aue-label="${data[keys.title]}">`;
+        data-aue-resource="urn:aemconnection:${cfPath}/jcr:content/data/master" 
+        data-aue-type="reference" 
+        data-aue-label="${data[keys.title]}">`;
   // eslint-disable-next-line no-underscore-dangle
   const cfPrimaryImagePath = data[keys.primaryImage]._path;
+  // Any element that contains a CF data property that
+  //    should be editable in the Universal Editor needs to have:
+  // data-aue-type
+  //    Tells the Universal Editor what type of form field the data is
+  // data-aue-prop
+  //    Tells the Universal Editor what property to save back to the content fragment
   innerHTML
         += `<div class="content-fragment-hero">
             <div class="content-fragment-image">
@@ -116,7 +129,6 @@ export default async function decorate(block) {
       https://www.aem.live/developer/component-model-definitions#creating-semantic-content-models-for-blocks
     */
     block.innerHTML = createDisplay(contentFragment);
-
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Content Fragment block error:', error);
