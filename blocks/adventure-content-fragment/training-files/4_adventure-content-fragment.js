@@ -1,13 +1,10 @@
 /**
  * Content Fragment Block
  * Displays a single content fragment selected via Universal Editor picker
- * Similar functionality to AdventureDetail.jsx but as a UE block
  */
 
 // eslint-disable-next-line import/no-unresolved
-import { getAdventureByPath } from '../../api/WKND_persistedQueries.js';
-// eslint-disable-next-line import/no-unresolved
-import { getAEMHost } from '../../api/aem-gql-connection.js';
+import { getAEMHost, getAdventureByPath } from '../../api/aem-gql-connection.js';
 
 /**
  * Show error state
@@ -24,6 +21,9 @@ function showEmpty(block) {
   block.innerHTML = `<div class="content-fragment-empty">${emptyMessage}</div>`;
 }
 
+// Format label for display
+// Converts camelCase to spaced words with first letter capitalized
+// e.g., "tripLength" becomes "Trip Length"
 function formatLabel(key) {
   return key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1');
 }
@@ -33,14 +33,10 @@ function createDisplay(contentfragment) {
   const { data } = contentfragment;
 
   let innerHTML = '';
-  // eslint-disable-next-line no-underscore-dangle
-  const cfPath = data._path;
 
   innerHTML
   += `<div class="headless-wrapper">
-    <div class="content-fragment-detail"
-        data-aue-resource="urn:aemconnection:${cfPath}/jcr:content/data/master"
-        data-aue-type="reference" data-aue-label="${data[keys.title]}">`;
+    <div class="content-fragment-detail">`;
   // eslint-disable-next-line no-underscore-dangle
   const cfPrimaryImagePath = data[keys.primaryImage]._path;
   innerHTML
@@ -48,11 +44,11 @@ function createDisplay(contentfragment) {
             <div class="content-fragment-image">
                 <picture>
                     <source srcset="${getAEMHost()}${cfPrimaryImagePath}?width=1200&format=webply&optimize=medium" type="image/webp">
-                    <img src="${getAEMHost()}${cfPrimaryImagePath}?width=1200&format=webply&optimize=medium" alt="${data[keys.title]}" loading="lazy" data-aue-type="media" data-aue-prop="${keys.primaryImage}">
+                    <img src="${getAEMHost()}${cfPrimaryImagePath}?width=1200&format=webply&optimize=medium" alt="${data[keys.title]}" loading="lazy" >
                 </picture>
             </div>
             <div class="content-fragment-${keys.title}-overlay">
-                <h1 class="content-fragment-${keys.title}" data-aue-type="text" data-aue-prop="${keys.title} ">${data[keys.title]}</h1>
+                <h1 class="content-fragment-${keys.title}" ">${data[keys.title]}</h1>
             </div>
         </div>
         <div class="content-fragment-content">
@@ -62,7 +58,7 @@ function createDisplay(contentfragment) {
     if (data[detail]) {
       innerHTML += `<div class="content-fragment-detail-item">
                         <span class="detail-label">${formatLabel(detail)}</span>
-                        <span class="detail-value" data-aue-type="text" data-aue-prop="${detail}">${data[detail]}</span>
+                        <span class="detail-value">${data[detail]}</span>
                     </div>`;
     }
   });
@@ -70,13 +66,13 @@ function createDisplay(contentfragment) {
         += `</div>
             <div class="content-fragment-${keys.description}">
                   <h2>About This Adventure</h2>
-                  <div class="content-fragment-${keys.description}-content" data-aue-type="richtext" data-aue-prop="${keys.description}">
+                  <div class="content-fragment-${keys.description}-content">
                       ${data[keys.description].html || data[keys.description].plaintext}
                   </div>
               </div>
               <div class="content-fragment-${keys.itinerary}">
                   <h2>Itinerary</h2>
-                  <div class="content-fragment-${keys.itinerary}-content" data-aue-type="richtext" data-aue-prop="${keys.itinerary}">
+                  <div class="content-fragment-${keys.itinerary}-content">
                       ${data[keys.itinerary].html || data[keys.itinerary].plaintext}
                   </div>
               </div>
@@ -108,13 +104,13 @@ export default async function decorate(block) {
     }
 
     /*
-    Because the content fragment is a reference property,
-      we can rewrite the entire block with the content fragment data
-    Caution with doing this with default content and inferred elements
-      since UE it renders the block with special aue attributes
-    Learn more about inferred elements here:
-      https://www.aem.live/developer/component-model-definitions#creating-semantic-content-models-for-blocks
-    */
+      Because the content fragment is a reference property,
+        we can rewrite the entire block with the content fragment data
+      Caution with doing this with default content and inferred elements
+        since UE it renders the block with special aue attributes
+      Learn more about inferred elements here:
+        https://www.aem.live/developer/component-model-definitions#creating-semantic-content-models-for-blocks
+      */
     block.innerHTML = createDisplay(contentFragment);
   } catch (error) {
     // eslint-disable-next-line no-console
