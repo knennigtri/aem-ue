@@ -1,17 +1,9 @@
-function getAEMPublish() {
-  return 'https://publish-p156903-e1726641.adobeaemcloud.com';
-}
-
-function getAEMAuthor() {
-  return 'https://author-p156903-e1726641.adobeaemcloud.com';
-}
-
 // Dynamic switching for Universal Editor (author) and .aem.page/aem.live (publish)
 function getAEMHost() {
   if (window.location.hostname.endsWith('adobeaemcloud.com')) {
-    return getAEMAuthor();
+    return 'https://author-p156903-e1726641.adobeaemcloud.com';
   }
-  return getAEMPublish();
+  return 'https://publish-p156903-e1726641.adobeaemcloud.com';
 }
 
 function getCDNCacheBuster() {
@@ -70,6 +62,58 @@ async function fetchPersistedQuery(persistedQueryName, queryParameters) {
   return { data, err };
 }
 
+const WKND_CONTEXT = {
+  endpoint: 'wknd-shared',
+  query: {
+    adventureByPath: 'adventure-by-path',
+  },
+};
+
+// keys as strings for adventureByPath query
+const adventureByPathKeys = {
+  title: 'title',
+  description: 'description',
+  adventureType: 'adventureType',
+  tripLength: 'tripLength',
+  activity: 'activity',
+  groupSize: 'groupSize',
+  difficulty: 'difficulty',
+  price: 'price',
+  primaryImage: 'primaryImage',
+  itinerary: 'itinerary',
+};
+
+/**
+ * Fetch adventure by path - vanilla JavaScript version
+ * @param {String} path the content fragment path
+ * @returns Promise with adventure data or error
+ */
+async function getAdventureByPath(path) {
+  const queryParameters = {
+    adventurePath: path,
+    imageFormat: 'JPG',
+    imageSeoName: '',
+    imageWidth: 1200,
+    imageQuality: 80,
+  };
+
+  // Add cache busting for development
+  if (getCDNCacheBuster()) {
+    queryParameters.timestamp = new Date().getTime();
+  }
+
+  const { data, err } = await fetchPersistedQuery(
+    `${WKND_CONTEXT.endpoint}/${WKND_CONTEXT.query.adventureByPath}`,
+    queryParameters,
+  );
+
+  if (err) {
+    throw new Error(err);
+  }
+
+  return { data: data?.adventureByPath?.item, keys: adventureByPathKeys };
+}
+
 export {
-  getAEMHost, getAEMPublish, getAEMAuthor, getCDNCacheBuster, fetchPersistedQuery,
+  getAEMHost, getCDNCacheBuster, getAdventureByPath,
 };
