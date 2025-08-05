@@ -1,0 +1,5 @@
+mountpoints:
+  /:
+    url: "https://author-p156903-e1726641.adobeaemcloud.com/bin/franklin.delivery/knennigtri/aem-edge-getting-started/main"
+    type: "markup"
+    suffix: ".html"

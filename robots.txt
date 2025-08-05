@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://main--aem-edge-getting-started--yourOrg.aem.live/sitemap.xml
