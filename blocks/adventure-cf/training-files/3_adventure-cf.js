@@ -4,7 +4,7 @@
  */
 
 // eslint-disable-next-line import/no-unresolved
-import { getAdventureByPath } from '../../api/aem-gql-connection.js';
+import { getAdventureByPath } from '../../scripts/aem-gql-connection.js';
 
 /**
  * Show error state
