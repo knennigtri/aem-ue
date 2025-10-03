@@ -12,18 +12,18 @@
 
 :root {
   /* colors */
-  --primary-color: rgb(255 234 3);
-  --secondary-color: rgb(32 32 32);
-  --background-color: white;
-  --light-color: rgb(235 235 235);
-  --dark-color: var(--secondary-color);
-  --text-color: var(--secondary-color);
-  --link-color: var(--text-color);
-  --link-hover-color: black;
+  --primary-color: rgb(255 234 3); /* WKND primary color */
+  --secondary-color: rgb(32 32 32); /* Secondary brand color */
+  --background-color: white; /* Background color */
+  --light-color: rgb(235 235 235); /* Light Background color */
+  --dark-color: var(--secondary-color); /* Dark text color */
+  --text-color: var(--secondary-color); /* Default text color */
+  --link-color: var(--text-color); /* Link color */
+  --link-hover-color: black; /* Base hover color */
 
   /* fonts */
-  --body-font-family: 'Source Sans Pro', sans-serif;
-  --heading-font-family: 'Asar', sans-serif;
+  --body-font-family: 'Source Sans Pro', sans-serif; /* Heading font */
+  --heading-font-family: 'Asar', sans-serif; /* Body font */
 
   /* body sizes */
   --body-font-size-m: 22px;
@@ -104,11 +104,11 @@ h6 {
 }
 
 h1 { font-size: var(--heading-font-size-xxl); }
-h2 { font-size: var(--heading-font-size-xl); }
+h2 { font-size: var(--heading-font-size-xl); } /* Set font size for h2 */
 
 /* Add a partial yellow underline under H2 */
 h2::after {
-  border-bottom: 2px solid var(--primary-color);
+  border-bottom: 2px solid var(--primary-color); /* Yellow underline */
   content: "";
   display: block;
   padding-top: 8px;

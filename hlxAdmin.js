@@ -14,7 +14,7 @@ require('dotenv').config();
 const axios = require('axios');
 
 const ORG = 'knennigtri';
-const REPO = 'aem-edge-getting-started';
+const REPO = 'aem-ue';
 const BRANCH = 'main';
 
 const operations = {
