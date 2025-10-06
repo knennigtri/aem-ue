@@ -1,10 +1,16 @@
 // Dynamic switching for Universal Editor (author) and .aem.page/aem.live (publish)
 function getAEMHost() {
-  //TODO remove / at the end
+  let host;
   if (window.location.hostname.endsWith('adobeaemcloud.com')) {
-    return 'https://author-p156903-e1726641.adobeaemcloud.com';
+    host = 'https://author-p156903-e1726641.adobeaemcloud.com';
+  } else {
+    host = 'https://publish-p156903-e1726641.adobeaemcloud.com';
   }
-  return 'https://publish-p156903-e1726641.adobeaemcloud.com';
+  // Remove trailing slash if present
+  if (host.endsWith('/')) {
+    host = host.slice(0, -1);
+  }
+  return host;
 }
 
 function getCDNCacheBuster() {
