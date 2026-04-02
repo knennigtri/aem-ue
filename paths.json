@@ -1,12 +1,12 @@
 {
   "mappings": [
-    "/content/wknd-xwalk/:/",
-    "/content/wknd-xwalk/configuration:/.helix/config.json",
-    "/content/wknd-xwalk/metadata:/metadata.json",
-    "/content/wknd-xwalk/redirects:/redirects.json",
-    "/content/wknd-xwalk.resource/query-index.json:/query-index.json"
+    "/content/aem-wknd-eds-ue/:/",
+    "/content/aem-wknd-eds-ue/configuration:/.helix/config.json",
+    "/content/aem-wknd-eds-ue/metadata:/metadata.json",
+    "/content/aem-wknd-eds-ue/redirects:/redirects.json",
+    "/content/aem-wknd-eds-ue.resource/query-index.json:/query-index.json"
   ],
   "includes": [
-    "/content/wknd-xwalk/"
+    "/content/aem-wknd-eds-ue/"
   ]
 }
